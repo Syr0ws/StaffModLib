@@ -1,8 +1,10 @@
 package fr.syrows.staffmodlib.staffmod;
 
 import fr.syrows.staffmodlib.events.ItemUseEvent;
+import fr.syrows.staffmodlib.listeners.ItemListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +16,10 @@ import java.util.stream.Collectors;
 public class StaffModManager {
 
     private Map<UUID, StaffMod> playersInStaffMod = new HashMap<>();
+
+    public void init(Plugin plugin) {
+        Bukkit.getPluginManager().registerEvents(new ItemListeners(this), plugin);
+    }
 
     public void handle(Player player, ItemUseEvent event) {
 
