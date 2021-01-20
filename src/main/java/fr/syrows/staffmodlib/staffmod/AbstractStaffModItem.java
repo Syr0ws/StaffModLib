@@ -1,6 +1,6 @@
 package fr.syrows.staffmodlib.staffmod;
 
-import fr.syrows.events.ItemUseEvent;
+import fr.syrows.staffmodlib.events.ItemUseEvent;
 
 import java.util.ArrayList;
 import java.util.List;

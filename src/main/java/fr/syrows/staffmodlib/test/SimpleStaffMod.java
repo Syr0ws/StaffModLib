@@ -1,6 +1,6 @@
 package fr.syrows.staffmodlib.test;
 
-import fr.syrows.staffmod.AbstractStaffMod;
+import fr.syrows.staffmodlib.staffmod.AbstractStaffMod;
 
 public class SimpleStaffMod extends AbstractStaffMod {
 

@@ -1,9 +1,9 @@
 package fr.syrows.staffmodlib.listeners;
 
-import fr.syrows.events.ItemUseEvent;
-import fr.syrows.events.ItemUseOnBlockEvent;
-import fr.syrows.events.ItemUseOnEntityEvent;
-import fr.syrows.staffmod.StaffModManager;
+import fr.syrows.staffmodlib.events.ItemUseEvent;
+import fr.syrows.staffmodlib.events.ItemUseOnBlockEvent;
+import fr.syrows.staffmodlib.events.ItemUseOnEntityEvent;
+import fr.syrows.staffmodlib.staffmod.StaffModManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

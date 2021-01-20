@@ -1,10 +1,10 @@
 package fr.syrows.staffmodlib.test;
 
-import fr.syrows.events.ItemUseEvent;
-import fr.syrows.events.ItemUseOnBlockEvent;
-import fr.syrows.staffmod.AbstractStaffModItem;
-import fr.syrows.util.Configurable;
-import fr.syrows.util.UseEvent;
+import fr.syrows.staffmodlib.events.ItemUseEvent;
+import fr.syrows.staffmodlib.events.ItemUseOnBlockEvent;
+import fr.syrows.staffmodlib.staffmod.AbstractStaffModItem;
+import fr.syrows.staffmodlib.util.Configurable;
+import fr.syrows.staffmodlib.util.UseEvent;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;

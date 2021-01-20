@@ -1,7 +1,7 @@
 package fr.syrows.staffmodlib.staffmod;
 
-import fr.syrows.events.ItemUseEvent;
-import fr.syrows.util.UseEvent;
+import fr.syrows.staffmodlib.events.ItemUseEvent;
+import fr.syrows.staffmodlib.util.UseEvent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

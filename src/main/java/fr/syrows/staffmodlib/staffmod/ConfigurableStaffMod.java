@@ -1,6 +1,6 @@
 package fr.syrows.staffmodlib.staffmod;
 
-import fr.syrows.util.Configurable;
+import fr.syrows.staffmodlib.util.Configurable;
 import org.bukkit.configuration.ConfigurationSection;
 
 public abstract class ConfigurableStaffMod extends AbstractStaffMod implements Configurable {

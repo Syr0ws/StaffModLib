@@ -1,8 +1,8 @@
 package fr.syrows.staffmodlib.staffmod;
 
-import fr.syrows.data.Data;
-import fr.syrows.data.PlayerData;
-import fr.syrows.events.ItemUseEvent;
+import fr.syrows.staffmodlib.data.Data;
+import fr.syrows.staffmodlib.data.PlayerData;
+import fr.syrows.staffmodlib.events.ItemUseEvent;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
