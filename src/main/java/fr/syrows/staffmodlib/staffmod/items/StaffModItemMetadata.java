@@ -2,6 +2,7 @@ package fr.syrows.staffmodlib.staffmod.items;
 
 import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.util.UseEvent;
+import org.bukkit.event.Event;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,18 +13,18 @@ import java.util.Map;
 public class StaffModItemMetadata {
 
     private StaffModItem item;
-    private Map<Method, Class<? extends ItemUseEvent>> listeners;
+    private Map<Method, Class<? extends Event>> listeners;
 
     public StaffModItemMetadata(StaffModItem item) {
         this.item = item;
         this.listeners = this.parseListeners();
     }
 
-    public void handle(ItemUseEvent event) {
+    public void handle(Event event) {
 
-        for(Map.Entry<Method, Class<? extends ItemUseEvent>> entry : this.listeners.entrySet()) {
+        for(Map.Entry<Method, Class<? extends Event>> entry : this.listeners.entrySet()) {
 
-            Class<? extends ItemUseEvent> clazz = entry.getValue();
+            Class<? extends Event> clazz = entry.getValue();
 
             if(!clazz.equals(event.getClass())) continue;
 
@@ -32,9 +33,9 @@ public class StaffModItemMetadata {
         }
     }
 
-    private Map<Method, Class<? extends ItemUseEvent>> parseListeners() {
+    private Map<Method, Class<? extends Event>> parseListeners() {
 
-        Map<Method, Class<? extends ItemUseEvent>> listeners = new HashMap<>();
+        Map<Method, Class<? extends Event>> listeners = new HashMap<>();
 
         Method[] methods = item.getClass().getDeclaredMethods();
 
@@ -63,7 +64,7 @@ public class StaffModItemMetadata {
         return this.item;
     }
 
-    public Map<Method, Class<? extends ItemUseEvent>> getListeners() {
+    public Map<Method, Class<? extends Event>> getListeners() {
         return Collections.unmodifiableMap(this.listeners);
     }
 }
