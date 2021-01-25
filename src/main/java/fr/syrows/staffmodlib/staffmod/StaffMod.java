@@ -13,7 +13,7 @@ public interface StaffMod {
 
     void removeStaffMod(Player player);
 
-    void registerModItems();
+    void registerItems();
 
     void handle(ItemUseEvent event);
 
