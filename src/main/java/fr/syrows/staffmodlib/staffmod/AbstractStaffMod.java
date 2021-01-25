@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class AbstractStaffMod implements StaffMod {
@@ -70,6 +71,12 @@ public abstract class AbstractStaffMod implements StaffMod {
     @Override
     public Data getPlayerData() {
         return this.playerData;
+    }
+
+    public boolean hasStaffMod(Player player) {
+        Optional<StaffMod> optional = this.manager.getStaffMod(player);
+        return optional.map(staffMod -> staffMod.equals(this)).orElse(false);
+
     }
 
     public StaffModManager getStaffModManager() {
