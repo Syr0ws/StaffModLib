@@ -37,17 +37,6 @@ public class StaffModManager {
         manager.registerEvents(new StaffModListeners(), plugin);
     }
 
-    public void handle(Player player, ItemUseEvent event) {
-
-        Optional<StaffMod> optional = this.getStaffMod(player);
-
-        if(!optional.isPresent())
-            throw new StaffModException("Trying to handle an exception for a player which is not in staff mod.");
-
-        StaffMod mod = optional.get();
-        mod.handle(event);
-    }
-
     public void setStaffMod(Player player, StaffMod mod) {
 
         if(this.isInStaffMod(player))
@@ -118,7 +107,7 @@ public class StaffModManager {
 
             } else return;
 
-            StaffModManager.this.handle(player, itemUseEvent);
+            Bukkit.getPluginManager().callEvent(itemUseEvent);
 
             event.setCancelled(itemUseEvent.isCancelled());
         }
@@ -141,7 +130,7 @@ public class StaffModManager {
 
             ItemUseOnEntityEvent itemUseOnEntityEvent = new ItemUseOnEntityEvent(player, item, slot, event.getRightClicked());
 
-            StaffModManager.this.handle(player, itemUseOnEntityEvent);
+            Bukkit.getPluginManager().callEvent(itemUseOnEntityEvent);
 
             event.setCancelled(itemUseOnEntityEvent.isCancelled());
         }

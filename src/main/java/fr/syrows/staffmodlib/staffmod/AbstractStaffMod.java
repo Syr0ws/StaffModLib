@@ -3,13 +3,12 @@ package fr.syrows.staffmodlib.staffmod;
 import fr.syrows.staffmodlib.StaffModManager;
 import fr.syrows.staffmodlib.data.Data;
 import fr.syrows.staffmodlib.data.PlayerData;
-import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.staffmod.items.StaffModItem;
-import fr.syrows.staffmodlib.staffmod.items.StaffModItemMetadata;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractStaffMod implements StaffMod {
 
     private final StaffModManager manager;
-    private final List<StaffModItemMetadata> items = new ArrayList<>();
+    private final List<StaffModItem> items = new ArrayList<>();
 
     private PlayerData playerData;
 
@@ -28,15 +27,7 @@ public abstract class AbstractStaffMod implements StaffMod {
     public abstract PlayerData createPlayerData();
 
     public void registerItem(StaffModItem item) {
-        StaffModItemMetadata metadata = new StaffModItemMetadata(item);
-        this.items.add(metadata);
-    }
-
-    @Override
-    public void handle(ItemUseEvent event) {
-        this.items.stream()
-                .filter(item -> item.getItem().getSlot() == event.getSlot())
-                .forEach(item -> item.handle(event));
+        this.items.add(item);
     }
 
     @Override
@@ -63,9 +54,7 @@ public abstract class AbstractStaffMod implements StaffMod {
 
     @Override
     public Collection<StaffModItem> getModItems() {
-        return this.items.stream()
-                .map(StaffModItemMetadata::getItem)
-                .collect(Collectors.toList());
+        return Collections.unmodifiableList(this.items);
     }
 
     @Override

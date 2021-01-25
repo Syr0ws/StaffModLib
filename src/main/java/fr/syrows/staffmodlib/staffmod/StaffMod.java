@@ -9,13 +9,11 @@ import java.util.Collection;
 
 public interface StaffMod {
 
+    void registerItems();
+
     void setStaffMod(Player player);
 
     void removeStaffMod(Player player);
-
-    void registerItems();
-
-    void handle(ItemUseEvent event);
 
     Collection<StaffModItem> getModItems();
 
