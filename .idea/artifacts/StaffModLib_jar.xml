@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="StaffModLib:jar">
+    <output-path>E:/Développement/Minecraft/Serveurs/Spigot v1.8.8</output-path>
+    <root id="archive" name="StaffModLib.jar">
+      <element id="module-output" name="StaffModLib" />
+    </root>
+  </artifact>
+</component>

@@ -1,7 +1,7 @@
 package fr.syrows.staffmodlib.listeners;
 
 import fr.syrows.staffmodlib.staffmod.StaffMod;
-import fr.syrows.staffmodlib.staffmod.StaffModManager;
+import fr.syrows.staffmodlib.StaffModManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

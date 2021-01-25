@@ -1,5 +1,6 @@
 package fr.syrows.staffmodlib.staffmod;
 
+import fr.syrows.staffmodlib.StaffModManager;
 import fr.syrows.staffmodlib.data.Data;
 import fr.syrows.staffmodlib.data.PlayerData;
 import fr.syrows.staffmodlib.events.items.ItemUseEvent;
@@ -14,10 +15,16 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractStaffMod implements StaffMod {
 
+    private final StaffModManager manager;
     private final List<StaffModItemMetadata> items = new ArrayList<>();
+
     private PlayerData playerData;
 
-    public abstract PlayerData registerPlayerData();
+    public AbstractStaffMod(StaffModManager manager) {
+        this.manager = manager;
+    }
+
+    public abstract PlayerData getNewPlayerData();
 
     public void registerItem(StaffModItem item) {
         StaffModItemMetadata metadata = new StaffModItemMetadata(item);
@@ -34,9 +41,13 @@ public abstract class AbstractStaffMod implements StaffMod {
     @Override
     public void setStaffMod(Player player) {
 
-        this.playerData = this.registerPlayerData();
+        this.manager.setStaffMod(player, this);
+
+        this.playerData = this.getNewPlayerData();
         this.playerData.save(player);
         this.playerData.clear(player);
+
+        this.registerModItems();
 
         this.getModItems()
                 .forEach(item -> player.getInventory().setItem(item.getSlot(), item.getItemStack()));
@@ -58,5 +69,9 @@ public abstract class AbstractStaffMod implements StaffMod {
     @Override
     public Data getPlayerData() {
         return this.playerData;
+    }
+
+    public StaffModManager getStaffModManager() {
+        return this.manager;
     }
 }
