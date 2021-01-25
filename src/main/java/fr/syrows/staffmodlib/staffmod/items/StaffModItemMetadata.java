@@ -1,6 +1,6 @@
-package fr.syrows.staffmodlib.staffmod;
+package fr.syrows.staffmodlib.staffmod.items;
 
-import fr.syrows.staffmodlib.events.ItemUseEvent;
+import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.util.UseEvent;
 
 import java.lang.reflect.InvocationTargetException;
@@ -25,7 +25,7 @@ public class StaffModItemMetadata {
 
             Class<? extends ItemUseEvent> clazz = entry.getValue();
 
-            if(!clazz.isInstance(event)) continue;
+            if(!clazz.equals(event.getClass())) continue;
 
             try { entry.getKey().invoke(this.item, event);
             } catch (IllegalAccessException | InvocationTargetException e) { e.printStackTrace(); }

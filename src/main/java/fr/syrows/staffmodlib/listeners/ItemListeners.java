@@ -1,92 +1,102 @@
 package fr.syrows.staffmodlib.listeners;
 
-import fr.syrows.staffmodlib.events.ItemUseEvent;
-import fr.syrows.staffmodlib.events.ItemUseOnBlockEvent;
-import fr.syrows.staffmodlib.events.ItemUseOnEntityEvent;
+import fr.syrows.staffmodlib.staffmod.StaffMod;
 import fr.syrows.staffmodlib.staffmod.StaffModManager;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractAtEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Optional;
 
 public class ItemListeners implements Listener {
 
+    private final Plugin plugin;
     private final StaffModManager manager;
 
-    public ItemListeners(StaffModManager manager) {
+    public ItemListeners(Plugin plugin, StaffModManager manager) {
+        this.plugin = plugin;
         this.manager = manager;
     }
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerQuit(PlayerQuitEvent event) {
 
         Player player = event.getPlayer();
 
-        // Not in staff mod.
-        if(!this.manager.isInStaffMod(player)) return;
-
-        // Player doesn't hold an item.
-        if(!event.hasItem()) return;
-
-        Action action = event.getAction();
-        ItemStack item = event.getItem();
-        int slot = player.getInventory().getHeldItemSlot();
-
-        ItemUseEvent itemUseEvent;
-
-        if(action == Action.RIGHT_CLICK_AIR || action == Action.LEFT_CLICK_AIR) {
-
-            itemUseEvent = new ItemUseEvent(player, item, slot);
-
-        } else if(action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK){
-
-            itemUseEvent = new ItemUseOnBlockEvent(player, item, slot,
-                    event.getClickedBlock(), event.getBlockFace(), action);
-
-        } else return;
-
-        this.manager.handle(player, itemUseEvent);
-
-        event.setCancelled(itemUseEvent.isCancelled());
+        if(this.manager.isInStaffMod(player)) this.manager.removeStaffMod(player);
     }
 
     @EventHandler
-    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event) {
+    public void onPlayerDrop(PlayerDropItemEvent event) {
 
         Player player = event.getPlayer();
 
-        // Player isn't in staff mod.
-        if(!this.manager.isInStaffMod(player)) return;
+        Optional<StaffMod> optional = this.manager.getStaffMod(player);
 
-        Optional<ItemStack> optional = this.getItemInHand(player);
-
-        // Player doesn't hold an item.
         if(!optional.isPresent()) return;
 
-        ItemStack item = optional.get();
-        int slot = player.getInventory().getHeldItemSlot();
+        StaffMod staffmod = optional.get();
 
-        ItemUseOnEntityEvent itemUseOnEntityEvent = new ItemUseOnEntityEvent(player, item, slot, event.getRightClicked());
-
-        this.manager.handle(player, itemUseOnEntityEvent);
-
-        event.setCancelled(itemUseOnEntityEvent.isCancelled());
+        staffmod.getModItems().stream()
+                .filter(item -> event.getItemDrop().getItemStack().isSimilar(item.getItemStack()))
+                .findFirst()
+                .ifPresent(item -> event.setCancelled(true));
     }
 
-    private Optional<ItemStack> getItemInHand(Player player) {
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
 
-        PlayerInventory inventory = player.getInventory();
+        Player player = (Player) event.getWhoClicked();
+        Inventory inventory = event.getClickedInventory();
 
-        int heldItemSlot = inventory.getHeldItemSlot();
-        ItemStack item = inventory.getItem(heldItemSlot);
+        if(inventory == null || !inventory.equals(player.getInventory())) return;
 
-        return item != null && item.getType() != Material.AIR ? Optional.of(item) : Optional.empty();
+        Optional<StaffMod> optional = this.manager.getStaffMod(player);
+
+        if(!optional.isPresent()) return;
+
+        StaffMod staffmod = optional.get();
+
+        staffmod.getModItems().stream()
+                .filter(item -> item.getSlot() == event.getSlot() || event.getCurrentItem().isSimilar(item.getItemStack()))
+                .findFirst()
+                .ifPresent(item -> event.setCancelled(true));
+    }
+
+    @EventHandler
+    public void onPluginDisable(PluginDisableEvent event) {
+
+        if(event.getPlugin().equals(this.plugin))
+            Bukkit.getOnlinePlayers().stream().filter(this.manager::isInStaffMod).forEach(manager::removeStaffMod);
+    }
+
+    @EventHandler
+    public void onPlayerDamage(EntityDamageEvent event) {
+
+        Entity entity = event.getEntity();
+
+        if(!(entity instanceof Player)) return;
+
+        Player player = (Player) entity;
+
+        if(this.manager.isInStaffMod(player)) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onFoodLevelChange(FoodLevelChangeEvent event) {
+
+        Player player = (Player) event.getEntity();
+
+        if(this.manager.isInStaffMod(player)) event.setCancelled(true);
     }
 }

@@ -2,12 +2,18 @@ package fr.syrows.staffmodlib.data;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayerData implements Data {
 
-    private List<Data> data = Arrays.asList(new InventoryData(), new PotionData());
+    protected List<Data> data;
+
+    public PlayerData(List<Data> data) {
+        this.data = data;
+    }
 
     @Override
     public void save(Player player) {
@@ -22,5 +28,9 @@ public class PlayerData implements Data {
     @Override
     public void restore(Player player) {
         this.data.forEach(data -> data.restore(player));
+    }
+
+    public List<Data> getData() {
+        return Collections.unmodifiableList(this.data);
     }
 }

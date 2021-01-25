@@ -1,4 +1,4 @@
-package fr.syrows.staffmodlib.events;
+package fr.syrows.staffmodlib.events.items;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

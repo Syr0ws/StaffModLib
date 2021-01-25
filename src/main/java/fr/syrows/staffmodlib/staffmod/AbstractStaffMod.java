@@ -2,7 +2,9 @@ package fr.syrows.staffmodlib.staffmod;
 
 import fr.syrows.staffmodlib.data.Data;
 import fr.syrows.staffmodlib.data.PlayerData;
-import fr.syrows.staffmodlib.events.ItemUseEvent;
+import fr.syrows.staffmodlib.events.items.ItemUseEvent;
+import fr.syrows.staffmodlib.staffmod.items.StaffModItem;
+import fr.syrows.staffmodlib.staffmod.items.StaffModItemMetadata;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -12,13 +14,10 @@ import java.util.stream.Collectors;
 
 public abstract class AbstractStaffMod implements StaffMod {
 
-    private final PlayerData playerData;
-    private final List<StaffModItemMetadata> items;
+    private final List<StaffModItemMetadata> items = new ArrayList<>();
+    private PlayerData playerData;
 
-    public AbstractStaffMod() {
-        this.playerData = new PlayerData();
-        this.items = new ArrayList<>();
-    }
+    public abstract PlayerData registerPlayerData();
 
     public void registerItem(StaffModItem item) {
         StaffModItemMetadata metadata = new StaffModItemMetadata(item);
@@ -35,6 +34,7 @@ public abstract class AbstractStaffMod implements StaffMod {
     @Override
     public void setStaffMod(Player player) {
 
+        this.playerData = this.registerPlayerData();
         this.playerData.save(player);
         this.playerData.clear(player);
 
