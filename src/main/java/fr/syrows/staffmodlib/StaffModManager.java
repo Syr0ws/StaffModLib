@@ -50,7 +50,8 @@ public class StaffModManager {
 
     public void setStaffMod(Player player, StaffMod mod) {
 
-        if(this.isInStaffMod(player)) return;
+        if(this.isInStaffMod(player))
+            throw new StaffModException("Player already in staff mod.");
 
         this.playersInStaffMod.put(player.getUniqueId(), mod);
 
@@ -59,7 +60,8 @@ public class StaffModManager {
 
     public void removeStaffMod(Player player) {
 
-        if(!this.isInStaffMod(player)) return;
+        if(!this.isInStaffMod(player))
+            throw new StaffModException("Player not in staff mod.");
 
         StaffMod mod = this.getNullableStaffMod(player);
 
