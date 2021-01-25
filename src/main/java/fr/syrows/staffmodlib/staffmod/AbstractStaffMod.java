@@ -24,7 +24,7 @@ public abstract class AbstractStaffMod implements StaffMod {
         this.manager = manager;
     }
 
-    public abstract PlayerData registerPlayerData();
+    public abstract PlayerData createPlayerData();
 
     public void registerItem(StaffModItem item) {
         StaffModItemMetadata metadata = new StaffModItemMetadata(item);
@@ -43,7 +43,7 @@ public abstract class AbstractStaffMod implements StaffMod {
 
         this.manager.setStaffMod(player, this);
 
-        this.playerData = this.registerPlayerData();
+        this.playerData = this.createPlayerData();
         this.playerData.save(player);
         this.playerData.clear(player);
 
