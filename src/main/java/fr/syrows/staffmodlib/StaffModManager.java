@@ -1,4 +1,4 @@
-package fr.syrows.staffmodlib.staffmod;
+package fr.syrows.staffmodlib;
 
 import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnBlockEvent;
@@ -6,6 +6,7 @@ import fr.syrows.staffmodlib.events.items.ItemUseOnEntityEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModDisableEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModEnableEvent;
 import fr.syrows.staffmodlib.exceptions.StaffModException;
+import fr.syrows.staffmodlib.staffmod.StaffMod;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -53,20 +54,14 @@ public class StaffModManager {
 
         this.playersInStaffMod.put(player.getUniqueId(), mod);
 
-        mod.registerModItems();
-        mod.setStaffMod(player);
-
         Bukkit.getPluginManager().callEvent(new StaffModEnableEvent(player, mod));
     }
 
     public void removeStaffMod(Player player) {
 
-        Optional<StaffMod> optional = this.getStaffMod(player);
+        if(!this.isInStaffMod(player)) return;
 
-        if(!optional.isPresent()) return;
-
-        StaffMod mod = optional.get();
-        mod.removeStaffMod(player);
+        StaffMod mod = this.getNullableStaffMod(player);
 
         this.playersInStaffMod.remove(player.getUniqueId());
 
