@@ -2,11 +2,16 @@ package fr.syrows.staffmodlib.staffmod.items;
 
 import fr.syrows.staffmodlib.util.Configurable;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class ConfigurableItem extends StaffModItem implements Configurable {
 
     private ItemStack item;
+
+    public ConfigurableItem(Player owner) {
+        super(owner);
+    }
 
     public abstract ConfigurationSection getConfigurationSection(ConfigurationSection parent);
 

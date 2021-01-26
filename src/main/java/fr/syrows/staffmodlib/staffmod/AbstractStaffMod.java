@@ -18,6 +18,7 @@ public abstract class AbstractStaffMod implements StaffMod {
     private final StaffModManager manager;
     private final List<StaffModItem> items = new ArrayList<>();
 
+    private Player player;
     private PlayerData playerData;
 
     public AbstractStaffMod(StaffModManager manager) {
@@ -32,11 +33,12 @@ public abstract class AbstractStaffMod implements StaffMod {
     }
 
     @Override
-    public void setStaffMod(Player player) {
+    public void enable(Player player) {
 
-        this.registerItems();
-
+        this.player = player;
         this.manager.setStaffMod(player, this);
+
+        this.registerItems(player);
 
         this.playerData = this.createPlayerData();
         this.playerData.save(player);
@@ -47,8 +49,9 @@ public abstract class AbstractStaffMod implements StaffMod {
     }
 
     @Override
-    public void removeStaffMod(Player player) {
+    public void disable(Player player) {
 
+        this.player = null;
         this.manager.removeStaffMod(player);
 
         this.items.forEach(StaffModItem::onUnregister);
@@ -69,5 +72,9 @@ public abstract class AbstractStaffMod implements StaffMod {
 
     public StaffModManager getStaffModManager() {
         return this.manager;
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }

@@ -9,11 +9,11 @@ import java.util.Collection;
 
 public interface StaffMod {
 
-    void registerItems();
+    void registerItems(Player owner);
 
-    void setStaffMod(Player player);
+    void enable(Player player);
 
-    void removeStaffMod(Player player);
+    void disable(Player player);
 
     Collection<StaffModItem> getModItems();
 
