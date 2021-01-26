@@ -7,6 +7,7 @@ import fr.syrows.staffmodlib.events.staffmod.StaffModDisableEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModEnableEvent;
 import fr.syrows.staffmodlib.exceptions.StaffModException;
 import fr.syrows.staffmodlib.staffmod.StaffMod;
+import fr.syrows.staffmodlib.staffmod.items.StaffModItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -87,6 +88,8 @@ public class StaffModManager {
             // Not in staff mod.
             if(!StaffModManager.this.isInStaffMod(player)) return;
 
+            StaffMod staffMod = StaffModManager.this.getNullableStaffMod(player);
+
             // Player doesn't hold an item.
             if(!event.hasItem()) return;
 
@@ -94,15 +97,17 @@ public class StaffModManager {
             ItemStack item = event.getItem();
             int slot = player.getInventory().getHeldItemSlot();
 
+            StaffModItem staffModItem = this.getStaffModItem(staffMod, slot);
+
             ItemUseEvent itemUseEvent;
 
             if(action == Action.RIGHT_CLICK_AIR || action == Action.LEFT_CLICK_AIR) {
 
-                itemUseEvent = new ItemUseEvent(player, item, slot);
+                itemUseEvent = new ItemUseEvent(player, staffModItem, item, slot);
 
             } else if(action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK){
 
-                itemUseEvent = new ItemUseOnBlockEvent(player, item, slot,
+                itemUseEvent = new ItemUseOnBlockEvent(player, item, staffModItem, slot,
                         event.getClickedBlock(), event.getBlockFace(), action);
 
             } else return;
@@ -120,6 +125,8 @@ public class StaffModManager {
             // Player isn't in staff mod.
             if(!StaffModManager.this.isInStaffMod(player)) return;
 
+            StaffMod staffMod = StaffModManager.this.getNullableStaffMod(player);
+
             Optional<ItemStack> optional = this.getItemInHand(player);
 
             // Player doesn't hold an item.
@@ -128,7 +135,9 @@ public class StaffModManager {
             ItemStack item = optional.get();
             int slot = player.getInventory().getHeldItemSlot();
 
-            ItemUseOnEntityEvent itemUseOnEntityEvent = new ItemUseOnEntityEvent(player, item, slot, event.getRightClicked());
+            StaffModItem staffModItem = this.getStaffModItem(staffMod, slot);
+
+            ItemUseOnEntityEvent itemUseOnEntityEvent = new ItemUseOnEntityEvent(player, item, staffModItem, slot, event.getRightClicked());
 
             Bukkit.getPluginManager().callEvent(itemUseOnEntityEvent);
 
@@ -143,6 +152,19 @@ public class StaffModManager {
             ItemStack item = inventory.getItem(heldItemSlot);
 
             return item != null && item.getType() != Material.AIR ? Optional.of(item) : Optional.empty();
+        }
+
+        private StaffModItem getStaffModItem(StaffMod staffMod, int slot) {
+
+            Optional<StaffModItem> optional = staffMod.getModItems()
+                    .stream()
+                    .filter(modItem -> modItem.getSlot() == slot)
+                    .findFirst();
+
+            if(!optional.isPresent())
+                throw new NullPointerException("StaffModItem not found.");
+
+            return optional.get();
         }
     }
 }

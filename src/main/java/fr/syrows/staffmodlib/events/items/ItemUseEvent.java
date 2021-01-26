@@ -12,18 +12,24 @@ public class ItemUseEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private final Player player;
+    private final StaffModItem staffModItem;
     private final ItemStack item;
     private final int slot;
     private boolean cancelled;
 
-    public ItemUseEvent(Player player, ItemStack item, int slot) {
+    public ItemUseEvent(Player player, StaffModItem staffModItem, ItemStack item, int slot) {
         this.player = player;
+        this.staffModItem = staffModItem;
         this.item = item;
         this.slot = slot;
     }
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public StaffModItem getStaffModItem() {
+        return this.staffModItem;
     }
 
     public ItemStack getItem() {
