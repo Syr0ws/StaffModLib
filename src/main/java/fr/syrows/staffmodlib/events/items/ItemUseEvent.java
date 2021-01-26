@@ -1,5 +1,6 @@
 package fr.syrows.staffmodlib.events.items;
 
+import fr.syrows.staffmodlib.staffmod.items.StaffModItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -31,6 +32,10 @@ public class ItemUseEvent extends Event implements Cancellable {
 
     public int getSlot() {
         return this.slot;
+    }
+
+    public boolean isSimilar(StaffModItem item) {
+        return item.getSlot() == this.slot && item.getItemStack().isSimilar(this.item);
     }
 
     @Override

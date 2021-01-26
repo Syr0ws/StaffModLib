@@ -8,6 +8,10 @@ public abstract class StaffModItem {
 
     public abstract ItemStack getItemStack();
 
+    public void onRegister() {}
+
+    public void onUnregister() {}
+
     public void setSlot(int slot) {
         this.slot = slot;
     }

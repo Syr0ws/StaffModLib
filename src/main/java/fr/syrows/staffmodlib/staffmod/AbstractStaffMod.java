@@ -27,11 +27,14 @@ public abstract class AbstractStaffMod implements StaffMod {
     public abstract PlayerData createPlayerData();
 
     public void registerItem(StaffModItem item) {
+        item.onRegister();
         this.items.add(item);
     }
 
     @Override
     public void setStaffMod(Player player) {
+
+        this.registerItems();
 
         this.manager.setStaffMod(player, this);
 
@@ -48,6 +51,8 @@ public abstract class AbstractStaffMod implements StaffMod {
 
         this.manager.removeStaffMod(player);
 
+        this.items.forEach(StaffModItem::onUnregister);
+
         this.playerData.clear(player);
         this.playerData.restore(player);
     }
@@ -60,12 +65,6 @@ public abstract class AbstractStaffMod implements StaffMod {
     @Override
     public Data getPlayerData() {
         return this.playerData;
-    }
-
-    public boolean hasStaffMod(Player player) {
-        Optional<StaffMod> optional = this.manager.getStaffMod(player);
-        return optional.map(staffMod -> staffMod.equals(this)).orElse(false);
-
     }
 
     public StaffModManager getStaffModManager() {
