@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 public class StaffModManager {
 
-    private Map<UUID, StaffMod> playersInStaffMod = new HashMap<>();
+    private final Map<UUID, StaffMod> playersInStaffMod = new HashMap<>();
 
     public StaffModManager(Plugin plugin) {
 
@@ -156,7 +156,7 @@ public class StaffModManager {
 
         private StaffModItem getStaffModItem(StaffMod staffMod, int slot) {
 
-            Optional<StaffModItem> optional = staffMod.getModItems()
+            Optional<StaffModItem> optional = staffMod.getItems()
                     .stream()
                     .filter(modItem -> modItem.getSlot() == slot)
                     .findFirst();

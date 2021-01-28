@@ -1,32 +1,14 @@
 package fr.syrows.staffmodlib.staffmod.items;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public abstract class StaffModItem {
+public interface StaffModItem {
 
-    private final Player owner;
-    private int slot;
+    void onRegister();
 
-    public StaffModItem(Player owner) {
-        this.owner = owner;
-    }
+    void onUnregister();
 
-    public abstract ItemStack getItemStack();
+    int getSlot();
 
-    public void onRegister() {}
-
-    public void onUnregister() {}
-
-    public void setSlot(int slot) {
-        this.slot = slot;
-    }
-
-    public int getSlot() {
-        return this.slot;
-    }
-
-    public Player getOwner() {
-        return this.owner;
-    }
+    ItemStack getItemStack();
 }

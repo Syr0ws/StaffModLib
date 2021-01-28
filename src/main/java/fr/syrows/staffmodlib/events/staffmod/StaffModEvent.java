@@ -6,8 +6,8 @@ import org.bukkit.event.Event;
 
 public abstract class StaffModEvent extends Event {
 
-    private Player player;
-    private StaffMod staffmod;
+    private final Player player;
+    private final StaffMod staffmod;
 
     public StaffModEvent(Player player, StaffMod staffmod) {
         this.player = player;
