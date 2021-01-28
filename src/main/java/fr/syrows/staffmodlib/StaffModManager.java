@@ -114,8 +114,7 @@ public class StaffModManager {
 
                 Bukkit.getPluginManager().callEvent(itemUseEvent);
                 event.setCancelled(itemUseEvent.isCancelled());
-
-            } else return;
+            }
         }
 
         @EventHandler

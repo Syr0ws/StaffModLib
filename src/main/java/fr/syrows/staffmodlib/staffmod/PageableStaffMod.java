@@ -4,6 +4,7 @@ import fr.syrows.staffmodlib.StaffModManager;
 import fr.syrows.staffmodlib.staffmod.items.AbstractPageItem;
 import fr.syrows.staffmodlib.staffmod.items.StaffModItem;
 import fr.syrows.staffmodlib.tool.Pagination;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.Collection;
@@ -44,17 +45,24 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
     @Override
     public void registerItem(StaffModItem item) {
 
-        super.registerItem(item);
+        item.onRegister();
 
-        int count = this.page.countElements();
+        int count = this.pagination.countElements();
 
-        if(count == MAX_ITEMS) {
+        if(count != 0 && count % MAX_ITEMS == 0) {
 
             StaffModItem last = this.page.getElements().get(MAX_ITEMS - 1);
+
             this.pagination.removeElement(last);
 
-            this.pagination.addElement(this.getNextPageItem());
-            this.pagination.addElement(this.getPreviousPageItem());
+            AbstractPageItem next = this.getNextPageItem();
+            next.onRegister();
+
+            AbstractPageItem previous = this.getPreviousPageItem();
+            previous.onRegister();
+
+            this.pagination.addElement(next);
+            this.pagination.addElement(previous);
             this.pagination.addElement(last);
 
         } else if(count < MAX_ITEMS) this.pagination.addElement(item);
@@ -72,8 +80,8 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
             if(i < items.size()) {
 
                 StaffModItem item = items.get(i);
-
                 item.setSlot(i);
+
                 inventory.setItem(item.getSlot(), item.getItemStack());
 
             } else inventory.setItem(i, null);
@@ -82,6 +90,6 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
 
     @Override
     public Collection<StaffModItem> getItems() {
-        return this.pagination.getElements();
+        return this.page.getElements();
     }
 }
