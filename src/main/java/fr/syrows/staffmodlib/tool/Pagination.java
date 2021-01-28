@@ -1,6 +1,9 @@
 package fr.syrows.staffmodlib.tool;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class Pagination<T> {
 
@@ -257,7 +260,7 @@ public class Pagination<T> {
     /**
      * Set the number of elements a page can contain.
      * This method will clear the old pages and generate new ones.
-     * @param elementsPerPage
+     * @param elementsPerPage the number of elements per page.
      */
     public void setElementsPerPage(int elementsPerPage) {
         this.elementsPerPage = elementsPerPage;
