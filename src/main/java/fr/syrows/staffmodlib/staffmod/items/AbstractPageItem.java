@@ -18,6 +18,8 @@ public abstract class AbstractPageItem extends AbstractStaffModItem {
     private final Plugin plugin;
     private final PageableStaffMod staffMod;
 
+    private Listener listener;
+
     public AbstractPageItem(Player holder, Plugin plugin, PageableStaffMod staffMod) {
         super(holder);
         this.plugin = plugin;
@@ -26,12 +28,13 @@ public abstract class AbstractPageItem extends AbstractStaffModItem {
 
     @Override
     public void onRegister() {
-        Bukkit.getPluginManager().registerEvents(new ItemListener(), this.plugin);
+        this.listener = new ItemListener();
+        Bukkit.getPluginManager().registerEvents(this.listener, this.plugin);
     }
 
     @Override
     public void onUnregister() {
-        HandlerList.unregisterAll(this.plugin);
+        HandlerList.unregisterAll(this.listener);
     }
 
     protected abstract PageItemType getPageItemType();

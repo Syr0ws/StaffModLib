@@ -3,7 +3,6 @@ package fr.syrows.staffmodlib;
 import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnBlockEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnEntityEvent;
-import fr.syrows.staffmodlib.events.items.StaffModItemEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModDisableEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModEnableEvent;
 import fr.syrows.staffmodlib.exceptions.StaffModException;
@@ -22,11 +21,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StaffModManager {
