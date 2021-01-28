@@ -3,9 +3,11 @@ package fr.syrows.staffmodlib.staffmod.items;
 import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnBlockEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnEntityEvent;
+import fr.syrows.staffmodlib.events.items.StaffModItemEvent;
 import fr.syrows.staffmodlib.staffmod.PageableStaffMod;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -56,7 +58,7 @@ public abstract class AbstractPageItem extends AbstractStaffModItem {
             this.handle(event);
         }
 
-        private void handle(ItemUseEvent event) {
+        private <T extends StaffModItemEvent & Cancellable> void handle(T event) {
 
             Player player = event.getPlayer();
 

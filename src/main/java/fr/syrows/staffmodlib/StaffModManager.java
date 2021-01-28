@@ -3,6 +3,7 @@ package fr.syrows.staffmodlib;
 import fr.syrows.staffmodlib.events.items.ItemUseEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnBlockEvent;
 import fr.syrows.staffmodlib.events.items.ItemUseOnEntityEvent;
+import fr.syrows.staffmodlib.events.items.StaffModItemEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModDisableEvent;
 import fr.syrows.staffmodlib.events.staffmod.StaffModEnableEvent;
 import fr.syrows.staffmodlib.exceptions.StaffModException;
@@ -99,22 +100,22 @@ public class StaffModManager {
 
             StaffModItem staffModItem = this.getStaffModItem(staffMod, slot);
 
-            ItemUseEvent itemUseEvent;
-
             if(action == Action.RIGHT_CLICK_AIR || action == Action.LEFT_CLICK_AIR) {
 
-                itemUseEvent = new ItemUseEvent(player, staffModItem, item, slot);
+                ItemUseEvent itemUseEvent = new ItemUseEvent(player, staffModItem, item, slot);
+
+                Bukkit.getPluginManager().callEvent(itemUseEvent);
+                event.setCancelled(itemUseEvent.isCancelled());
 
             } else if(action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK){
 
-                itemUseEvent = new ItemUseOnBlockEvent(player, item, staffModItem, slot,
+                ItemUseOnBlockEvent itemUseEvent = new ItemUseOnBlockEvent(player, item, staffModItem, slot,
                         event.getClickedBlock(), event.getBlockFace(), action);
 
+                Bukkit.getPluginManager().callEvent(itemUseEvent);
+                event.setCancelled(itemUseEvent.isCancelled());
+
             } else return;
-
-            Bukkit.getPluginManager().callEvent(itemUseEvent);
-
-            event.setCancelled(itemUseEvent.isCancelled());
         }
 
         @EventHandler
