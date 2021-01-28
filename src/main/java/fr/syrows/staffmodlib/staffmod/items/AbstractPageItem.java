@@ -36,7 +36,7 @@ public abstract class AbstractPageItem extends AbstractStaffModItem {
 
     protected abstract PageItemType getPageItemType();
 
-    protected enum PageItemType {
+    public enum PageItemType {
 
         PREVIOUS, NEXT;
     }

@@ -335,7 +335,7 @@ public class Pagination<T> {
         }
 
         public int countElements() {
-            return this.end - this.begin;
+            return this.getElements().size();
         }
 
         /**

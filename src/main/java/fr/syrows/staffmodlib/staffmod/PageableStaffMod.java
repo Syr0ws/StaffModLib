@@ -69,17 +69,14 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
 
         for(int i = 0; i < MAX_ITEMS; i++) {
 
-            StaffModItem item = items.get(i);
+            if(i < items.size()) {
 
-            if(item != null) {
+                StaffModItem item = items.get(i);
 
                 item.setSlot(i);
                 inventory.setItem(item.getSlot(), item.getItemStack());
 
             } else inventory.setItem(i, null);
-
-            if(item == null) inventory.setItem(i, null);
-            else inventory.setItem(item.getSlot(), item.getItemStack());
         }
     }
 
