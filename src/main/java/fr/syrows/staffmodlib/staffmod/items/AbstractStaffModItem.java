@@ -22,6 +22,7 @@ public abstract class AbstractStaffModItem implements StaffModItem {
         return this.slot;
     }
 
+    @Override
     public void setSlot(int slot) {
 
         if(slot < 0 || slot > 8)

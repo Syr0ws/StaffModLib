@@ -10,5 +10,7 @@ public interface StaffModItem {
 
     int getSlot();
 
+    void setSlot(int slot);
+
     ItemStack getItemStack();
 }
