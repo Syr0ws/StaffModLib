@@ -51,9 +51,10 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
 
         if(count != 0 && count % MAX_ITEMS == 0) {
 
-            StaffModItem last = this.page.getElements().get(MAX_ITEMS - 1);
+            int lastIndex = count - 1;
+            StaffModItem last = this.pagination.getElements().get(lastIndex);
 
-            this.pagination.removeElement(last);
+            this.pagination.removeElement(lastIndex);
 
             AbstractPageItem next = this.getNextPageItem();
             next.onRegister();
@@ -65,7 +66,7 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
             this.pagination.addElement(previous);
             this.pagination.addElement(last);
 
-        } else if(count < MAX_ITEMS) this.pagination.addElement(item);
+        } else this.pagination.addElement(item);
     }
 
     @Override
@@ -73,7 +74,7 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
 
         PlayerInventory inventory = super.getPlayer().getInventory();
 
-        List<StaffModItem> items = this.page.getElements();
+        List<StaffModItem> items = this.getItems();
 
         for(int i = 0; i < MAX_ITEMS; i++) {
 
@@ -89,7 +90,11 @@ public abstract class PageableStaffMod extends AbstractStaffMod {
     }
 
     @Override
-    public Collection<StaffModItem> getItems() {
+    public List<StaffModItem> getItems() {
         return this.page.getElements();
+    }
+
+    public List<StaffModItem> getAllItems() {
+        return this.pagination.getElements();
     }
 }
