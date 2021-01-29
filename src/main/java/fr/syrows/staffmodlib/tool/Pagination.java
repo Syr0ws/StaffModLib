@@ -72,6 +72,23 @@ public class Pagination<T> {
         if(pages > 1 && this.getRequiredPages() < pages) this.pages.remove(this.getLast());
     }
 
+    public void removeElement(int index) {
+
+        if(index < 0)
+            throw new IllegalArgumentException("Index cannot be negative.");
+
+        if(index >= this.elements.size())
+            throw new IllegalArgumentException(String.format("Index : %d Size: %d", index, this.countElements()));
+
+        this.elements.remove(index);
+
+        int pages = this.countPages();
+
+        // If there is more than 1 page and the number of pages is greater the one required,
+        // removing the last page.
+        if(pages > 1 && this.getRequiredPages() < pages) this.pages.remove(this.getLast());
+    }
+
     /**
      * Check if an element is contained in the pagination.
      *
