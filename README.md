@@ -2,7 +2,7 @@
     <img src="pictures/logo.png" alt="StaffModLib logo">
     <div>
         <a href=""><img src="pictures/discord_icon.png" alt="Discord link"></a>
-        <a href=""><img src="pictures/gitlab_icon.png" alt="GitLab link"></a>
+        <a href=""><img src="pictures/github_icon.png" alt="GitHub link"></a>
         <a href=""><img src="pictures/spigot_icon.png" alt="Spigot link"></a>
         <a href=""><img src="pictures/documentation_icon.png" alt="Documentation link"></a>
     </div>
