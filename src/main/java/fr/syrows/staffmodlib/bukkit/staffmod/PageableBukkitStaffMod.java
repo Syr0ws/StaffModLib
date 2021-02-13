@@ -24,6 +24,18 @@ public abstract class PageableBukkitStaffMod extends BukkitStaffMod implements P
     }
 
     @Override
+    public void enable(Player holder) {
+        super.enable(holder);
+        this.setItems(holder);
+    }
+
+    @Override
+    public void disable(Player holder) {
+        super.disable(holder);
+        this.removeItems(holder);
+    }
+
+    @Override
     public void registerItem(StaffModItem<ItemStack> item) {
 
         super.registerItem(item);
