@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="pictures/logo.png" alt="StaffModLib logo">
+    <img src="presentation/logo.png" alt="StaffModLib logo">
     <div>
         <a href="https://discord.gg/UdBJvSY"><img src="presentation/discord_icon.png" alt="Discord link"></a>
         <a href="https://www.spigotmc.org/resources/staffmodlib.89180/"><img src="presentation/spigot_icon.png" alt="Spigot link"></a>
