@@ -1,10 +1,10 @@
 package fr.syrows.staffmodlib.bukkit.staffmod;
 
-import fr.syrows.staffmodlib.bukkit.BukkitStaffModManager;
 import fr.syrows.staffmodlib.bukkit.tool.Pagination;
 import fr.syrows.staffmodlib.common.items.NavigationItem;
 import fr.syrows.staffmodlib.common.items.StaffModItem;
 import fr.syrows.staffmodlib.common.staffmod.PageableStaffMod;
+import fr.syrows.staffmodlib.common.staffmod.StaffModManager;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -16,7 +16,7 @@ public abstract class PageableBukkitStaffMod extends BukkitStaffMod implements P
     private final Pagination<StaffModItem<ItemStack>> pagination;
     private Pagination<StaffModItem<ItemStack>>.Page page;
 
-    public PageableBukkitStaffMod(BukkitStaffModManager manager) {
+    public PageableBukkitStaffMod(StaffModManager<Player, ItemStack> manager) {
         super(manager);
 
         this.pagination = new Pagination<>(MAX_ITEMS);

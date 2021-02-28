@@ -1,7 +1,7 @@
 package fr.syrows.staffmodlib.bukkit.staffmod;
 
-import fr.syrows.staffmodlib.bukkit.BukkitStaffModManager;
 import fr.syrows.staffmodlib.common.items.StaffModItem;
+import fr.syrows.staffmodlib.common.staffmod.StaffModManager;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +14,7 @@ public class SimpleBukkitStaffMod extends BukkitStaffMod {
 
     private final List<StaffModItem<ItemStack>> items = new ArrayList<>();
 
-    public SimpleBukkitStaffMod(BukkitStaffModManager manager) {
+    public SimpleBukkitStaffMod(StaffModManager<Player, ItemStack> manager) {
         super(manager);
     }
 

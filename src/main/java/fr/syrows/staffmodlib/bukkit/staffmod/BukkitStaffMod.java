@@ -1,8 +1,8 @@
 package fr.syrows.staffmodlib.bukkit.staffmod;
 
-import fr.syrows.staffmodlib.bukkit.BukkitStaffModManager;
 import fr.syrows.staffmodlib.common.items.StaffModItem;
 import fr.syrows.staffmodlib.common.staffmod.StaffMod;
+import fr.syrows.staffmodlib.common.staffmod.StaffModManager;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -11,10 +11,10 @@ public abstract class BukkitStaffMod implements StaffMod<Player, ItemStack> {
 
     public static final int MAX_ITEMS = 9;
 
-    private final BukkitStaffModManager manager;
+    private final StaffModManager<Player, ItemStack> manager;
     private Player holder;
 
-    public BukkitStaffMod(BukkitStaffModManager manager) {
+    public BukkitStaffMod(StaffModManager<Player, ItemStack> manager) {
         this.manager = manager;
     }
 
