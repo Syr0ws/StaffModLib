@@ -1,10 +1,12 @@
 package fr.syrows.staffmodlib.bukkit.staffmod;
 
+import fr.syrows.staffmodlib.bukkit.events.staffmod.StaffModPageChangeEvent;
 import fr.syrows.staffmodlib.common.tool.Pagination;
 import fr.syrows.staffmodlib.common.items.NavigationItem;
 import fr.syrows.staffmodlib.common.items.StaffModItem;
 import fr.syrows.staffmodlib.common.staffmod.PageableStaffMod;
 import fr.syrows.staffmodlib.common.staffmod.StaffModManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -67,8 +69,12 @@ public abstract class PageableBukkitStaffMod extends BukkitStaffMod implements P
 
         if(!this.pagination.hasPrevious(this.page)) return;
 
+        // Storing old page because we'll need it to call StaffModPageChangeEvents.
+        Pagination<StaffModItem<ItemStack>>.Page oldPage = this.page;
+
         this.page = this.pagination.getPrevious(this.page);
-        this.setItems(super.getHolder());
+        this.setItems(super.getHolder()); // Setting the items of the new page.
+        this.callPageChangeEvent(oldPage); // Calling StaffModPageChangeEvents.
     }
 
     @Override
@@ -76,8 +82,12 @@ public abstract class PageableBukkitStaffMod extends BukkitStaffMod implements P
 
         if(!this.pagination.hasNext(this.page)) return;
 
+        // Storing old page because we'll need it to call StaffModPageChangeEvents.
+        Pagination<StaffModItem<ItemStack>>.Page oldPage = this.page;
+
         this.page = this.pagination.getNext(this.page);
-        this.setItems(super.getHolder());
+        this.setItems(super.getHolder()); // Setting the items of the new page.
+        this.callPageChangeEvent(oldPage); // Calling StaffModPageChangeEvents.
     }
 
     @Override
@@ -103,6 +113,14 @@ public abstract class PageableBukkitStaffMod extends BukkitStaffMod implements P
 
             } else inventory.setItem(i, null);
         }
+    }
+
+    private void callPageChangeEvent(Pagination<StaffModItem<ItemStack>>.Page oldPage) {
+
+        StaffModPageChangeEvent event = new StaffModPageChangeEvent(super.getHolder(), this,
+                oldPage.getNumber(), this.page.getNumber());
+
+        Bukkit.getPluginManager().callEvent(event);
     }
 
     protected Pagination<StaffModItem<ItemStack>> getPagination() {
