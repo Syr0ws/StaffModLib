@@ -27,13 +27,13 @@ public class SimpleBukkitStaffMod extends BukkitStaffMod {
     @Override
     public void enable(Player holder) {
         super.enable(holder);
-        this.getItemsHeld().forEach(item -> holder.getInventory().setItem(item.getSlot(), item.getItem()));
+        super.setItems(holder);
     }
 
     @Override
     public void disable(Player holder) {
         super.disable(holder);
-        this.getItemsHeld().forEach(item -> holder.getInventory().setItem(item.getSlot(), null));
+        super.removeItems(holder);
     }
 
     @Override
