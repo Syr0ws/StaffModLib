@@ -1,6 +1,6 @@
 package fr.syrows.staffmodlib.bukkit.staffmod;
 
-import fr.syrows.staffmodlib.bukkit.tool.Pagination;
+import fr.syrows.staffmodlib.common.tool.Pagination;
 import fr.syrows.staffmodlib.common.items.NavigationItem;
 import fr.syrows.staffmodlib.common.items.StaffModItem;
 import fr.syrows.staffmodlib.common.staffmod.PageableStaffMod;
