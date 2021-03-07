@@ -1,4 +1,4 @@
-package fr.syrows.staffmodlib.bukkit.tool;
+package fr.syrows.staffmodlib.common.tool;
 
 import java.util.ArrayList;
 import java.util.Collection;
