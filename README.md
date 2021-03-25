@@ -5,6 +5,7 @@
         <a href="https://www.spigotmc.org/resources/staffmodlib.89180/"><img src="presentation/spigot_icon.png" alt="Spigot link"></a>
         <a href="https://syrows-development.gitbook.io/staffmodlib/"><img src="presentation/documentation_icon.png" alt="Documentation link"></a>
     </div>
+    <div><img src="presentation/en/introduction_fr.png" alt="StaffModLib presentation"></div>
     <div><img src="presentation/en/presentation_en.png" alt="StaffModLib presentation"></div>
     <div><img src="presentation/en/updates_en.png" alt="StaffModLib old and next updates"></div>
     <div><img src="presentation/en/configurable_sm_example_en.gif" alt="Example of configurable staff mod"></div>
